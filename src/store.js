@@ -1,7 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import pokemonReducer from '../src/actions/reducers/pokemonReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import pokemonReducer from '../src/reducers/pokemonReducer';
 
-const store = createStore(pokemonReducer, applyMiddleware(thunk));
+const store = configureStore({
+  reducer: pokemonReducer
+});
 
 export default store;
