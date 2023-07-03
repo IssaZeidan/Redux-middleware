@@ -1,37 +1,30 @@
-import {
-    FETCH_POKEMON_REQUEST,
-    FETCH_POKEMON_SUCCESS,
-    FETCH_POKEMON_FAILURE
-  } from '../actions/pokemonActions'
-  const initialState = {
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchPokemon } from '../actions/pokemonActions';
+
+const pokemonSlice = createSlice({
+  name: 'pokemon',
+  initialState: {
     loading: false,
     data: null,
-    error: ''
-  };
-  
-  const pokemonReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case FETCH_POKEMON_REQUEST:
-        return {
-          ...state,
-          loading: true
-        };
-      case FETCH_POKEMON_SUCCESS:
-        return {
-          loading: false,
-          data: action.payload,
-          error: ''
-        };
-      case FETCH_POKEMON_FAILURE:
-        return {
-          loading: false,
-          data: null,
-          error: action.payload
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default pokemonReducer;
-  
+    error: '',
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchPokemon.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPokemon.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+        state.error = '';
+      })
+      .addCase(fetchPokemon.rejected, (state, action) => {
+        state.loading = false;
+        state.data = null;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default pokemonSlice.reducer;

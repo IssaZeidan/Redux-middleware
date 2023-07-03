@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import pokemonReducer from '../src/reducers/pokemonReducer';
+import pokemonReducer from './reducers/pokemonReducer';
+import thunkMiddleware from 'redux-thunk';
 
 const store = configureStore({
-  reducer: pokemonReducer
+  reducer: {
+    pokemon: pokemonReducer,
+  },
+  middleware: [thunkMiddleware],
 });
 
 export default store;

@@ -4,7 +4,7 @@ import { fetchPokemon } from './actions/pokemonActions';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state);
+  const { loading, data, error } = useSelector((state) => state.pokemon);
 
   useEffect(() => {
     dispatch(fetchPokemon());
@@ -16,9 +16,13 @@ const App = () => {
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      )}
+      ) : data ? (
+        <ul>
+          {data.results.map((pokemon) => (
+            <li key={pokemon.name}>{pokemon.name}</li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 };
